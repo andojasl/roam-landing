@@ -22,7 +22,7 @@ export function BenefitCard({
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
       className={cn(
-        "group relative p-6 rounded-2xl",
+        "group relative p-6 rounded-2xl h-full",
         "bg-card border border-border",
         "hover:border-white/20 transition-colors duration-300",
         className
