@@ -17,11 +17,35 @@ export function ContactForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get("name"),
+      email: formData.get("email"),
+      company: formData.get("company"),
+      phone: formData.get("phone"),
+      message: formData.get("message"),
+    };
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send message");
+      }
+
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -100,20 +124,37 @@ export function ContactForm() {
                 </div>
               </div>
 
-              <div>
-                <label
-                  htmlFor="company"
-                  className="block text-sm font-medium text-white mb-2"
-                >
-                  Company
-                </label>
-                <Input
-                  id="company"
-                  name="company"
-                  type="text"
-                  placeholder="Your company name"
-                  className="bg-white/5 border-border h-12"
-                />
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label
+                    htmlFor="company"
+                    className="block text-sm font-medium text-white mb-2"
+                  >
+                    Company
+                  </label>
+                  <Input
+                    id="company"
+                    name="company"
+                    type="text"
+                    placeholder="Your company name"
+                    className="bg-white/5 border-border h-12"
+                  />
+                </div>
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-white mb-2"
+                  >
+                    Phone Number
+                  </label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="+1 (555) 000-0000"
+                    className="bg-white/5 border-border h-12"
+                  />
+                </div>
               </div>
 
               <div>
