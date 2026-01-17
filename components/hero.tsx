@@ -47,9 +47,18 @@ export function Hero({ logoRef }: HeroProps) {
     <section
       className="relative min-h-screen flex flex-col items-center justify-center px-6 md:px-12 overflow-hidden"
     >
+      {/* Background image */}
+      <Image
+        src="/hero-bg.webp"
+        alt=""
+        fill
+        className="object-cover object-center"
+        priority
+      />
+
       <StarField />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/70 to-black pointer-events-none" />
 
       {/* White radial glow in center */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.15)_0%,_transparent_50%)] pointer-events-none" />
