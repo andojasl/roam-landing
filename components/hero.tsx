@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useMemo, RefObject } from "react";
+
+interface HeroProps {
+  logoRef?: RefObject<HTMLDivElement | null>;
+}
 
 function StarField() {
   const stars = useMemo(() => {
@@ -38,12 +42,17 @@ function StarField() {
   );
 }
 
-export function Hero() {
+export function Hero({ logoRef }: HeroProps) {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-6 md:px-12 overflow-hidden">
+    <section
+      className="relative min-h-screen flex flex-col items-center justify-center px-6 md:px-12 overflow-hidden"
+    >
       <StarField />
 
       <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black pointer-events-none" />
+
+      {/* White radial glow in center */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(255,255,255,0.15)_0%,_transparent_50%)] pointer-events-none" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -52,6 +61,7 @@ export function Hero() {
         className="relative z-10 flex flex-col items-center text-center max-w-4xl mx-auto"
       >
         <motion.div
+          ref={logoRef}
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
